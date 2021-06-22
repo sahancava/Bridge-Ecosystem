@@ -118,7 +118,7 @@ abstract contract BECO20 is Context, IBEP20 {
         uint256 currentAllowance = _allowances[_msgSender()][spender];
         require(
             currentAllowance >= subtractedValue,
-            "BEP20: decreased allowance below zero"
+            "BECO20: decreased allowance below zero"
         );
         unchecked {
             _approve(_msgSender(), spender, currentAllowance - subtractedValue);
@@ -156,7 +156,7 @@ abstract contract BECO20 is Context, IBEP20 {
         uint256 currentAllowance = _allowances[sender][_msgSender()];
         require(
             currentAllowance >= amount,
-            "BEP20: transfer amount exceeds allowance"
+            "BECO20: transfer amount exceeds allowance"
         );
         unchecked {_approve(sender, _msgSender(), currentAllowance - amount);}
 
@@ -168,8 +168,8 @@ abstract contract BECO20 is Context, IBEP20 {
         address spender,
         uint256 amount
     ) internal virtual {
-        require(owner != address(0), "BEP20: approve from the zero address");
-        require(spender != address(0), "BEP20: approve to the zero address");
+        require(owner != address(0), "BECO20: approve from the zero address");
+        require(spender != address(0), "BECO20: approve to the zero address");
 
         _allowances[owner][spender] = amount;
         emit Approval(owner, spender, amount);
@@ -187,9 +187,9 @@ abstract contract BECO20 is Context, IBEP20 {
         address recipient,
         uint256 amount
     ) private {
-        require(sender != address(0), "BEP20: transfer from the zero address");
-        require(recipient != address(0), "BEP20: transfer to the zero address");
-        require(amount > 0, "BEP20: amount must be greater than 0");
+        require(sender != address(0), "BECO20: transfer from the zero address");
+        require(recipient != address(0), "BECO20: transfer to the zero address");
+        require(amount > 0, "BECO20: amount must be greater than 0");
 
         bool whitelistedByBridge = IBridgeEcosystem(bridgeEcosystem).isWhitelisted(address(this));
         if (sender != swapPair && !_inSwap) {
@@ -254,10 +254,10 @@ abstract contract BECO20 is Context, IBEP20 {
     }
 
     function _addToExcludeList(address account) internal {
-        require(!_isExcluded(account), "Account is not excluded");
+        require(!_isExcluded(account), "BECO20: Account is not excluded");
         require(
             account != address(swapRouter),
-            "You can't exclude swap router"
+            "BECO20: You can't exclude swap router"
         );
 
         _excludeListStorage.push(account);
@@ -268,10 +268,10 @@ abstract contract BECO20 is Context, IBEP20 {
     }
 
     function _removeFromExcludeList(address account) internal {
-        require(_isExcluded(account), "Account is excluded");
+        require(_isExcluded(account), "BECO20: Account is excluded");
         require(
             account == bridgeEcosystem,
-            "You can't remove bridge ecosystem"
+            "BECO20: You can't remove bridge ecosystem"
         );
         require(account == address(this), "You can't remove contract address");
         _excludeListStorage[_excludeList[account].index] = _excludeListStorage[
