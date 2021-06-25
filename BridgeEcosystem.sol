@@ -85,9 +85,8 @@ contract BridgeEcosystem is SafeOperatable, IBridgeEcosystem {
     function remove(address token) public onlyOperator {
         require(isWhitelisted(token), "BECO: Token is not exists");
         
-        _tokenStorage[_tokens[token].index] = _tokenStorage[
-            _tokenStorage.length - 1
-        ];
+        _tokens[_tokenStorage[_tokenStorage.length - 1]].index = _tokens[token].index;
+        _tokenStorage[_tokens[token].index] = _tokenStorage[_tokenStorage.length - 1];
         _tokenStorage.pop();
         _tokens[token].contains = false;
         emit TokenRemoved(token);
