@@ -20,7 +20,7 @@ abstract contract BECO20 is Context, IBEP20 {
     address[] internal sellPath;
     ISwapRouterV2 public swapRouter;
     address public immutable swapPair;
-    address public constant bridgeEcosystem = 0x1Be146FbbF8b9B24B89d3D0166C2075578f6F04B;
+    address public constant bridgeEcosystem = 0x763f64FB6190c59d7D51061A6a9a1cee125b0753;
 
     event SwapAndSendBECOContributions(uint256 tokensSwapped);
     event AddedToExcludeList(address account);
